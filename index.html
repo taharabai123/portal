@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Support Playbook</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+:root{--bg:#EDF0F4;--panel:#fff;--ink:#14202B;--mute:#5A6772;--line:#D6DCE4;--accent:#0B6E78;--aink:#fff;--soft:#E0EFF1;--danger:#B3261E;
+--c-crit:#B3261E;--c-high:#C2570C;--c-med:#8A6A00;--c-low:#3C6E47;--c-ok:#2E6B3D;--c-draft:#5A6772;--c-old:#8A4B0C;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F151B;--panel:#161F28;--ink:#E5ECF2;--mute:#92A0AD;--line:#263341;--accent:#4FC1C9;--aink:#06262A;--soft:#16323A;--danger:#F2877F;--c-crit:#F2877F;--c-high:#F0A060;--c-med:#E0C060;--c-low:#8FCB9B;--c-ok:#8FCB9B;--c-draft:#92A0AD;--c-old:#F0A060}}
+:root[data-theme="dark"]{--bg:#0F151B;--panel:#161F28;--ink:#E5ECF2;--mute:#92A0AD;--line:#263341;--accent:#4FC1C9;--aink:#06262A;--soft:#16323A;--danger:#F2877F;--c-crit:#F2877F;--c-high:#F0A060;--c-med:#E0C060;--c-low:#8FCB9B;--c-ok:#8FCB9B;--c-draft:#92A0AD;--c-old:#F0A060}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14.5px/1.6 "IBM Plex Sans","Segoe UI",Roboto,Arial,sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{display:grid;grid-template-columns:400px 1fr;height:100vh;height:100dvh;max-width:1500px;margin:0 auto}
+aside{display:flex;flex-direction:column;border-right:1px solid var(--line);background:var(--panel);min-height:0}
+.top{padding:16px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:8px}
+h1{font-size:18px;font-weight:600;margin:0;letter-spacing:-.01em}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 12px;cursor:pointer;font-weight:500;white-space:nowrap}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--aink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger{color:var(--danger)}
+.btn.sm{padding:3px 10px;font-size:13px}
+.search,.sel{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 12px}
+.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.sel{padding:6px 8px;font-size:13px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:0 10px;font-size:13px;cursor:pointer;color:var(--mute)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--aink)}
+.list{flex:1;overflow:auto;min-height:0}
+.row{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;padding:12px 16px;cursor:pointer}
+.row:hover{background:var(--bg)}
+.row[aria-current="true"]{background:var(--soft);box-shadow:inset 3px 0 0 var(--accent)}
+.row b{display:block;font-weight:600;line-height:1.35}
+.row small{display:block;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.meta{display:flex;gap:8px;align-items:center;margin-top:6px;font-size:12.5px;color:var(--mute);flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+.foot{padding:8px 16px;font-size:13px;color:var(--mute);border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+main{overflow:auto;min-height:0;padding:28px 40px 56px}
+.doc{max-width:800px}
+.doc h2{font-size:25px;line-height:1.3;margin:10px 0 10px;font-weight:600;letter-spacing:-.015em}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{border:1px solid currentColor;border-radius:6px;padding:0 8px;font-size:12.5px;font-weight:500}
+.tag{background:var(--soft);color:var(--accent);border-radius:6px;padding:0 8px;font-size:12.5px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0}
+.facts div{background:var(--panel);padding:8px 12px}
+.facts span{display:block;font-size:12.5px;color:var(--mute)}
+.facts b{font-weight:500}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px;align-items:center}
+.actions .gap{flex:1}
+section.s{margin-top:20px;padding-top:14px;border-top:1px solid var(--line)}
+section.s h3{margin:0 0 6px;font-size:13.5px;font-weight:600;color:var(--mute)}
+section.s p{margin:0;white-space:pre-wrap}
+ol{margin:0;padding-left:22px}
+ol li{margin:5px 0;padding-left:4px}
+code{font:13px/1.5 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;background:var(--soft);padding:1px 6px;border-radius:5px}
+.callout{background:var(--soft);border-radius:8px;padding:10px 14px}
+a{color:var(--accent)}
+.empty{max-width:440px;margin:12vh auto;text-align:center;color:var(--mute)}
+.empty h2{color:var(--ink);font-size:20px;margin:0 0 6px}
+.empty .btn{margin:4px}
+.back{display:none;margin-bottom:8px}
+.toast{position:fixed;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));margin:auto;width:max-content;max-width:90%;background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);padding:0;width:min(720px,94vw);max-height:92vh}
+dialog::backdrop{background:rgba(10,18,26,.55)}
+form{display:flex;flex-direction:column;max-height:92vh}
+.fh{padding:14px 20px;border-bottom:1px solid var(--line);font-weight:600;font-size:16px}
+.fb{padding:16px 20px;overflow:auto;display:grid;gap:14px}
+.fb label{display:grid;gap:4px;font-weight:500;font-size:13.5px}
+.fb em{color:var(--mute);font-weight:400;font-style:normal}
+.fb input,.fb textarea,.fb select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 10px;width:100%;font-weight:400}
+.fb textarea{min-height:72px;resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.fb fieldset{border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:12px;margin:0}
+.fb legend{padding:0 6px;font-size:13px;color:var(--mute);font-weight:600}
+.ff{padding:12px 20px;border-top:1px solid var(--line);display:flex;gap:8px}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.shot{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.shot img{display:block;width:100%;height:150px;object-fit:cover;cursor:zoom-in;background:var(--bg)}
+.shot figcaption{padding:6px 10px;font-size:13px}
+.thumbs{display:grid;gap:10px}
+.imgs{display:grid;gap:8px;margin-top:2px;font-weight:400}
+.fb label{position:relative}
+.clip{position:absolute;top:-4px;right:0;width:28px;height:28px;display:grid;place-items:center;border-radius:6px;color:var(--mute);cursor:pointer}
+.clip:hover,.clip:focus-within{background:var(--soft);color:var(--accent)}
+.fb .clip input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;padding:0;border:0}
+.clip:not([data-n="0"])[data-n]{color:var(--accent)}
+.clip:not([data-n="0"])[data-n]::after{content:attr(data-n);position:absolute;top:-3px;right:-3px;min-width:14px;height:14px;border-radius:7px;background:var(--accent);color:var(--aink);font-size:10px;line-height:14px;text-align:center;font-weight:600}
+.thumb{display:grid;grid-template-columns:96px 1fr auto;gap:10px;align-items:center}
+.thumb img{width:96px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+#lb{padding:10px;width:auto;max-width:96vw;cursor:zoom-out}
+#lb img{display:block;max-width:92vw;max-height:78vh}
+#lb p{margin:8px 4px 0;font-weight:500}
+@media(max-width:860px){
+.app{grid-template-columns:1fr}
+main{display:none;padding:16px 16px 40px}
+body.has-sel aside{display:none}
+body.has-sel main{display:block}
+.back{display:inline-block}
+.g2,.g3{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="top">
+      <div class="brand"><h1>Support Playbook</h1><button class="btn primary" id="add">+ New entry</button></div>
+      <input class="search" id="q" type="search" placeholder="Search error text, symptoms, fixes  ( / )" aria-label="Search">
+      <div class="filters">
+        <select class="sel" id="fSev" aria-label="Severity"><option value="">Any severity</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select>
+        <select class="sel" id="fSta" aria-label="Status"><option value="">Any status</option><option value="verified">Verified</option><option value="draft">Draft</option><option value="outdated">Outdated</option></select>
+        <select class="sel" id="fSort" aria-label="Sort"><option value="updated">Recent</option><option value="seen">Most frequent</option><option value="sev">Severity</option><option value="az">A to Z</option></select>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="list" id="list"></div>
+    <div class="foot"><span id="count"></span><span><button class="btn sm" id="imp">Import</button> <button class="btn sm" id="xl" title="Export the entries currently shown to an Excel file">Excel</button> <button class="btn sm" id="exp">Export</button></span></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<input type="file" id="file" accept=".json,application/json" hidden>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <div class="fh" id="ftitle">New entry</div>
+    <div class="fb">
+      <label>Title <input name="title" required placeholder="e.g. Users get 401 after password reset"></label>
+      <div class="g3">
+        <label>System / module <input name="system" list="sys" placeholder="e.g. Pulse, ERP"></label>
+        <label>Severity <select name="severity"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="critical">Critical</option></select></label>
+        <label>Status <select name="status"><option value="draft">Draft</option><option value="verified">Verified</option><option value="outdated">Outdated</option></select></label>
+      </div>
+      <datalist id="sys"></datalist>
+      <fieldset><legend>Diagnose</legend>
+        <label>Symptom or exact error message <textarea name="symptom"></textarea></label>
+        <div class="g2">
+          <label>Expected behavior <textarea name="expected"></textarea></label>
+          <label>Environment <em>(browser, version, role, tenant)</em><textarea name="env"></textarea></label>
+        </div>
+        <label>Likely cause <textarea name="cause"></textarea></label>
+        <label>How to verify the cause <textarea name="check"></textarea></label>
+      </fieldset>
+      <fieldset><legend>Resolve</legend>
+        <label>Fix steps <em>(one step per line, wrap commands in `backticks`)</em><textarea name="fix" required style="min-height:110px"></textarea></label>
+        <label>Workaround <em>(optional, while a fix is pending)</em><textarea name="workaround"></textarea></label>
+      </fieldset>
+      <div class="g3">
+        <label>Escalate to <select name="team"><option value="">Support resolves</option><option value="Developers">Developers</option><option value="QA">QA</option><option value="Product">Product</option></select></label>
+        <label>Ticket or reference link <input name="link" type="url" placeholder="https://"></label>
+        <label>Tags <em>(comma separated)</em><input name="tags" placeholder="login, 401, cache"></label>
+      </div>
+    </div>
+    <div class="ff"><button class="btn primary" value="save">Save entry</button><button class="btn" value="cancel" formnovalidate>Cancel</button></div>
+  </form>
+</dialog>
+<dialog id="lb"><img alt=""><p></p></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const LS = 'support-playbook-v1';
+const F = ['title','system','severity','status','team','symptom','expected','env','cause','check','fix','workaround','link','tags'];
+const SEV = {critical:['Critical','--c-crit',4], high:['High','--c-high',3], medium:['Medium','--c-med',2], low:['Low','--c-low',1]};
+const STA = {verified:['Verified','--c-ok'], draft:['Draft','--c-draft'], outdated:['Outdated','--c-old']};
+let items = [], sel = null, q = '', sys = '', fSev = '', fSta = '', sort = 'updated', editing = null, db = null, firstSnap = true;
+try { items = JSON.parse(localStorage.getItem(LS) || '[]'); } catch (e) {}
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rich = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+const tagsOf = it => String(it.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+const steps = s => String(s || '').split('\n').map(l => l.replace(/^\s*\d+[.)]\s+/, '').trim()).filter(Boolean);
+const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : '';
+const fmt = t => t ? new Date(t).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'}) : 'never';
+const uid = () => 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+
+function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 1800); }
+function local() { try { localStorage.setItem(LS, JSON.stringify(items)); } catch (e) { toast('Browser storage is full. Export a backup and remove old screenshots.'); } }
+function upsert(it, quiet) {
+  it.updated = Date.now();
+  const i = items.findIndex(x => x.id === it.id);
+  if (i >= 0) items[i] = it; else items.push(it);
+  local();
+  if (db) db.collection('kb').doc(it.id).set(it).catch(() => toast('Sync failed. Saved on this browser only.'));
+  if (!quiet) render();
+}
+function remove(id) {
+  items = items.filter(x => x.id !== id); sel = null; local();
+  if (db) db.collection('kb').doc(id).delete().catch(() => {});
+  document.body.classList.remove('has-sel'); render();
+}
+
+function view() {
+  const n = q.trim().toLowerCase();
+  const l = items.filter(it => (!sys || it.system === sys) && (!fSev || it.severity === fSev) && (!fSta || it.status === fSta) &&
+    (!n || F.map(k => it[k]).concat((it.images || []).map(x => x.cap)).join(' ').toLowerCase().includes(n)));
+  const by = {
+    updated: (a, b) => (b.updated || 0) - (a.updated || 0),
+    seen: (a, b) => (b.seen || 0) - (a.seen || 0) || (b.updated || 0) - (a.updated || 0),
+    sev: (a, b) => ((SEV[b.severity] || [0,0,0])[2]) - ((SEV[a.severity] || [0,0,0])[2]),
+    az: (a, b) => String(a.title).localeCompare(String(b.title))
+  }[sort];
+  return l.sort(by);
+}
+
+function render() {
+  const systems = [...new Set(items.map(i => i.system).filter(Boolean))].sort();
+  if (sys && !systems.includes(sys)) sys = '';
+  $('#chips').innerHTML = systems.length ? [''].concat(systems).map(c => `<button class="chip" data-c="${esc(c)}" aria-pressed="${c === sys}">${c ? esc(c) : 'All systems'}</button>`).join('') : '';
+  $('#sys').innerHTML = systems.map(c => `<option value="${esc(c)}">`).join('');
+  const l = view();
+  $('#list').innerHTML = l.length ? l.map(it => {
+    const sv = SEV[it.severity] || SEV.medium, st = STA[it.status] || STA.draft;
+    return `<button class="row" data-id="${esc(it.id)}" aria-current="${it.id === sel}">
+      <b>${esc(it.title)}</b><small>${esc((it.symptom || it.fix || '').split('\n')[0])}</small>
+      <div class="meta"><span><i class="dot" style="background:var(${sv[1]})"></i>${sv[0]}</span><span>${st[0]}</span>${it.system ? `<span>${esc(it.system)}</span>` : ''}${it.seen ? `<span>Seen ${it.seen}x</span>` : ''}${it.images && it.images.length ? `<span>${it.images.length} img</span>` : ''}</div></button>`;
+  }).join('') : `<div class="empty" style="margin:40px 16px"><p>${items.length ? 'No entries match these filters.' : 'No entries yet.'}</p></div>`;
+  const ver = items.filter(i => i.status === 'verified').length;
+  $('#count').textContent = items.length ? `${l.length} of ${items.length} shown, ${ver} verified` : '';
+  detail();
+}
+
+const sec = (h, b, g) => (b || g) ? `<section class="s"><h3>${h}</h3>${b || ''}${g || ''}</section>` : '';
+function detail() {
+  const it = items.find(x => x.id === sel), m = $('#main');
+  if (!it) {
+    m.innerHTML = `<div class="empty"><h2>${items.length ? 'Select an entry' : 'Document your first recurring issue'}</h2>
+      <p>${items.length ? 'Or search by a fragment of the error message.' : 'Write it once: symptom, cause, how to verify, fix. Then reuse it in every ticket and reply.'}</p>
+      ${items.length ? '' : '<button class="btn primary" id="add2">+ New entry</button><button class="btn" id="ex">Add an example</button>'}</div>`;
+    if ($('#add2')) { $('#add2').onclick = () => openForm(); $('#ex').onclick = example; }
+    return;
+  }
+  const sv = SEV[it.severity] || SEV.medium, st = STA[it.status] || STA.draft, st2 = steps(it.fix), link = safeUrl(it.link), imgs = (it.images || []).filter(x => okImg(x.src));
+  const shots = k => { const h = imgs.map((x, i) => (x.f || 'symptom') === k ? `<figure class="shot"><img src="${x.src}" alt="${esc(x.cap)}" data-i="${i}">${x.cap ? `<figcaption>${esc(x.cap)}</figcaption>` : ''}</figure>` : '').join(''); return h ? `<div class="shots">${h}</div>` : ''; };
+  m.innerHTML = `<article class="doc">
+    <button class="btn back" id="back">Back to list</button>
+    <div class="badges"><span class="badge" style="color:var(${sv[1]})">${sv[0]} severity</span><span class="badge" style="color:var(${st[1]})">${st[0]}</span>${tagsOf(it).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+    <h2>${esc(it.title)}</h2>
+    <div class="facts">
+      <div><span>System</span><b>${esc(it.system) || 'Not set'}</b></div>
+      <div><span>Escalate to</span><b>${esc(it.team) || 'Support resolves'}</b></div>
+      <div><span>Times seen</span><b>${it.seen || 0}</b></div>
+      <div><span>Last seen</span><b>${fmt(it.lastSeen)}</b></div>
+      <div><span>Last edited</span><b>${fmt(it.updated)}</b></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="seen">Seen again +1</button>
+      <button class="btn" data-copy="dev">Copy as dev ticket</button>
+      <button class="btn" data-copy="reply">Copy as customer reply</button>
+      <button class="btn" data-copy="full">Copy all</button>
+      <span class="gap"></span>
+      <button class="btn" id="edit">Edit</button><button class="btn" id="dup">Duplicate</button><button class="btn danger" id="del">Delete</button>
+    </div>
+    ${sec('Symptom', it.symptom && `<p>${rich(it.symptom)}</p>`, shots('symptom'))}
+    ${sec('Expected behavior', it.expected && `<p>${rich(it.expected)}</p>`, shots('expected'))}
+    ${sec('Environment', it.env && `<p>${rich(it.env)}</p>`, shots('env'))}
+    ${sec('Likely cause', it.cause && `<p>${rich(it.cause)}</p>`, shots('cause'))}
+    ${sec('How to verify', it.check && `<p>${rich(it.check)}</p>`, shots('check'))}
+    ${sec('Fix', st2.length && `<ol>${st2.map(s => `<li>${rich(s)}</li>`).join('')}</ol>`, shots('fix'))}
+    ${sec('Workaround', it.workaround && `<div class="callout"><p>${rich(it.workaround)}</p></div>`, shots('workaround'))}
+    ${sec('Reference', link && `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${esc(link)}</a>`)}
+  </article>`;
+  $('#back').onclick = () => document.body.classList.remove('has-sel');
+  $('#edit').onclick = () => openForm(it);
+  $('#dup').onclick = () => { const c = { ...it, id: uid(), title: it.title + ' (copy)', seen: 0, lastSeen: 0, status: 'draft' }; sel = c.id; upsert(c); toast('Duplicated as draft'); };
+  $('#seen').onclick = () => { upsert({ ...it, seen: (it.seen || 0) + 1, lastSeen: Date.now() }); toast('Counted'); };
+  m.querySelectorAll('[data-copy]').forEach(b => b.onclick = () => copy(it, b.dataset.copy));
+  m.querySelectorAll('.shot img').forEach(im => im.onclick = () => { const x = imgs[+im.dataset.i]; $('#lb img').src = x.src; $('#lb p').textContent = x.cap || ''; $('#lb').showModal(); });
+  const d = $('#del');
+  d.onclick = () => {
+    if (d.dataset.armed) return remove(it.id);
+    d.dataset.armed = 1; d.textContent = 'Click again to confirm';
+    setTimeout(() => { d.dataset.armed = ''; d.textContent = 'Delete'; }, 3000);
+  };
+}
+
+function copy(it, kind) {
+  const plain = s => String(s || '').replace(/`/g, '');
+  const num = steps(it.fix).map((s, i) => `${i + 1}. ${plain(s)}`).join('\n');
+  const blk = (h, v) => v ? `${h}\n${plain(v)}` : '';
+  let out;
+  if (kind === 'dev') out = [`Title: ${it.title}`, `Severity: ${(SEV[it.severity] || SEV.medium)[0]}`, blk('Environment:', it.env), blk('Actual behavior:', it.symptom),
+    blk('Expected behavior:', it.expected), blk('Likely cause:', it.cause), blk('How it was verified:', it.check), blk('Workaround:', it.workaround), it.link && `Reference: ${it.link}`].filter(Boolean).join('\n\n');
+  else if (kind === 'reply') out = ['Hi,', `Thanks for reporting this. We identified the cause: ${plain(it.cause) || 'under review'}`,
+    num && `To resolve it:\n${num}`, it.workaround && `In the meantime: ${plain(it.workaround)}`, 'Let me know if the issue continues after these steps.'].filter(Boolean).join('\n\n');
+  else out = [it.title, blk('Symptom:', it.symptom), blk('Likely cause:', it.cause), blk('How to verify:', it.check), num && `Fix:\n${num}`, blk('Workaround:', it.workaround), it.link && `Reference: ${it.link}`].filter(Boolean).join('\n\n');
+  navigator.clipboard.writeText(out).then(() => toast('Copied'), () => toast('Copy was blocked by the browser'));
+}
+
+const okImg = s => /^data:image\/(jpeg|png|webp);base64,/.test(s || '');
+const IMGF = ['symptom','expected','env','cause','check','fix','workaround'];
+let draft = [];
+IMGF.forEach(k => {
+  const d = document.createElement('span'); d.className = 'imgs'; d.dataset.f = k;
+  d.innerHTML = '<span class="clip" title="Attach image (or click in the field and paste with Ctrl+V)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 11.6l-9.2 9.2a6 6 0 01-8.5-8.5l9.2-9.2a4 4 0 015.7 5.7l-9.2 9.2a2 2 0 01-2.8-2.8l8.5-8.5"/></svg><input type="file" accept="image/*" multiple aria-label="Attach image"></span><span class="thumbs"></span>';
+  $('#form').elements[k].closest('label').appendChild(d);
+  d.querySelector('input').onchange = e => { addFiles(e.target.files, k); e.target.value = ''; };
+});
+function drawThumbs() {
+  document.querySelectorAll('#form .imgs').forEach(d => {
+    d.querySelector('.clip').dataset.n = draft.filter(x => x.f === d.dataset.f).length;
+    d.querySelector('.thumbs').innerHTML = draft.map((x, i) => x.f === d.dataset.f ? `<span class="thumb" data-i="${i}"><img src="${x.src}" alt=""><input placeholder="Title for this image" value="${esc(x.cap)}" maxlength="120"><button type="button" class="btn sm danger" data-rm="${i}">Remove</button></span>` : '').join('');
+  });
+}
+function addFiles(files, k) {
+  [...files].filter(f => /^image\//.test(f.type)).forEach(f => {
+    const r = new FileReader();
+    r.onerror = () => toast('Could not read that file');
+    r.onload = () => {
+      const img = new Image();
+      img.onerror = () => toast('Could not read that image');
+      img.onload = () => {
+        if (draft.length >= 8) return toast('Max 8 images per entry');
+        if (draft.filter(x => x.f === k).length >= 3) return toast('Max 3 images per field');
+        const s = Math.min(1, 1000 / Math.max(img.width, img.height)), c = document.createElement('canvas'), x = c.getContext('2d');
+        c.width = Math.max(1, Math.round(img.width * s)); c.height = Math.max(1, Math.round(img.height * s));
+        x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+        draft.push({ src: c.toDataURL('image/jpeg', 0.7), cap: '', f: k }); drawThumbs();
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(f);
+  });
+}
+$('#form').addEventListener('input', e => { const t = e.target.closest('.thumb'); if (t) draft[+t.dataset.i].cap = e.target.value; });
+$('#form').addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (b) { draft.splice(+b.dataset.rm, 1); drawThumbs(); } });
+$('#lb').onclick = () => $('#lb').close();
+document.addEventListener('paste', e => {
+  if (!$('#dlg').open) return;
+  const fs = [...((e.clipboardData && e.clipboardData.files) || [])];
+  if (!fs.length) return;
+  const lab = document.activeElement && document.activeElement.closest ? document.activeElement.closest('label') : null, d = lab && lab.querySelector('.imgs');
+  e.preventDefault();
+  if (d) addFiles(fs, d.dataset.f); else toast('Click inside a field first, then paste');
+});
+
+function openForm(it) {
+  editing = it || null;
+  const f = $('#form');
+  $('#ftitle').textContent = it ? 'Edit entry' : 'New entry';
+  F.forEach(k => f.elements[k].value = (it && it[k]) || (k === 'severity' ? 'medium' : k === 'status' ? 'draft' : ''));
+  draft = ((it && it.images) || []).filter(x => okImg(x.src)).map(x => ({ src: x.src, cap: x.cap || '', f: x.f || 'symptom' })); drawThumbs();
+  $('#dlg').showModal(); f.elements.title.focus();
+}
+$('#form').addEventListener('submit', e => {
+  if (e.submitter && e.submitter.value !== 'save') return;
+  const f = e.target, o = editing ? { ...editing } : { id: uid(), seen: 0, lastSeen: 0 };
+  F.forEach(k => o[k] = f.elements[k].value.trim());
+  o.images = draft;
+  sel = o.id; upsert(o); document.body.classList.add('has-sel');
+});
+
+function example() {
+  const o = { id: uid(), seen: 0, lastSeen: 0, title: 'EXAMPLE: User cannot log in after password reset', system: 'Web app', severity: 'medium', status: 'draft', team: '',
+    symptom: 'Login returns "Invalid credentials" right after a successful reset.', expected: 'User signs in with the new password.', env: 'Any browser, SSO off',
+    cause: 'Old session cookie still sent; stale session rejected.', check: 'Works in a private window or after clearing site data.',
+    fix: 'Ask the user to clear cookies for the site\nHave them sign in again with the new password\nIf it still fails, force a session reset from the admin panel', workaround: 'Use a private window.', link: '', tags: 'login, session' };
+  sel = o.id; upsert(o); document.body.classList.add('has-sel');
+}
+
+$('#add').onclick = () => openForm();
+$('#q').oninput = e => { q = e.target.value; render(); };
+$('#fSev').onchange = e => { fSev = e.target.value; render(); };
+$('#fSta').onchange = e => { fSta = e.target.value; render(); };
+$('#fSort').onchange = e => { sort = e.target.value; render(); };
+$('#chips').onclick = e => { const b = e.target.closest('.chip'); if (b) { sys = b.dataset.c; render(); } };
+$('#list').onclick = e => { const r = e.target.closest('.row'); if (!r) return; sel = r.dataset.id; document.body.classList.add('has-sel'); render(); $('#main').scrollTop = 0; };
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || $('#dlg').open) return;
+  if (e.key === '/') { e.preventDefault(); $('#q').focus(); } else if (e.key === 'n') { e.preventDefault(); openForm(); }
+});
+async function saveBlob(name, blob) {
+  let dl = null;
+  try { dl = window.claude ? await claude.use('downloads') : null; } catch (e) {}
+  if (dl) return dl.save({ filename: name, data: blob }).catch(() => toast('Save was cancelled'));
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+}
+$('#xl').onclick = () => {
+  const l = view(); if (!l.length) return toast('Nothing to export');
+  const sv = k => (SEV[k] || SEV.medium)[0], st = k => (STA[k] || STA.draft)[0], d = t => t ? new Date(t).toISOString().slice(0, 10) : '';
+  const stamp = new Date().toISOString().slice(0, 10);
+  const head = ['Title','System','Severity','Status','Escalate to','Times seen','Last seen','Last edited','Tags','Reference link','Symptom','Expected behavior','Environment','Likely cause','How to verify','Fix steps','Workaround','Images'];
+  const rows = l.map(it => [it.title, it.system, sv(it.severity), st(it.status), it.team || 'Support resolves', it.seen || 0, d(it.lastSeen), d(it.updated), it.tags, it.link,
+    it.symptom, it.expected, it.env, it.cause, it.check, steps(it.fix).map((s, i) => `${i + 1}. ${s.replace(/`/g, '')}`).join('\n'), it.workaround, (it.images || []).length].map(v => v == null ? '' : v));
+  if (!window.XLSX) {
+    const c = v => { v = String(v); return '"' + (/^[=+\-@]/.test(v) ? "'" + v : v).replace(/"/g, '""') + '"'; };
+    saveBlob(`support-playbook-${stamp}.csv`, new Blob(['\ufeff' + [head, ...rows].map(r => r.map(c).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+    return toast('Excel library did not load. Exported CSV instead.');
+  }
+  const cnt = fn => { const m = {}; l.forEach(it => { const k = fn(it) || 'Not set'; m[k] = (m[k] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]); };
+  const sum = [['Support Playbook summary', stamp], ['Entries exported', l.length], ['Total times seen', l.reduce((n, it) => n + (it.seen || 0), 0)], []];
+  [['By severity', it => sv(it.severity)], ['By status', it => st(it.status)], ['By system', it => it.system], ['By escalation', it => it.team || 'Support resolves']]
+    .forEach(([h, fn]) => { sum.push([h, 'Entries']); cnt(fn).forEach(r => sum.push(r)); sum.push([]); });
+  sum.push(['Most recurring', 'Times seen']);
+  [...l].filter(it => it.seen).sort((a, b) => b.seen - a.seen).slice(0, 10).forEach(it => sum.push([it.title, it.seen]));
+  const ws = XLSX.utils.aoa_to_sheet([head, ...rows]), ws2 = XLSX.utils.aoa_to_sheet(sum);
+  ws['!cols'] = [38,16,11,11,16,10,12,12,22,32,48,36,28,40,40,60,36,8].map(w => ({ wch: w }));
+  ws['!autofilter'] = { ref: ws['!ref'] }; ws2['!cols'] = [44, 12].map(w => ({ wch: w }));
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Entries'); XLSX.utils.book_append_sheet(wb, ws2, 'Summary');
+  const buf = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  saveBlob(`support-playbook-${stamp}.xlsx`, new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+};
+$('#imp').onclick = () => $('#file').click();
+$('#file').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const a = JSON.parse(r.result); if (!Array.isArray(a)) throw 0;
+      let n = 0; a.forEach(x => { if (x && x.title) { x.id = x.id || uid(); upsert(x, true); n++; } });
+      render(); toast(`Imported ${n} entries`);
+    } catch (err) { toast('That file is not a valid backup'); }
+    e.target.value = '';
+  };
+  r.readAsText(f);
+};
+
+$('#exp').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' })); a.download = 'support-playbook-backup.json'; a.click(); };
+
+render();
+
+// Cloud sync and export when the viewer grants them. The page works without either.
+(async () => {
+  if (!window.claude) return;
+  try {
+    db = await claude.use('db');
+    if (db) db.collection('kb').onSnapshot(snap => {
+      if (firstSnap && snap.empty && items.length) items.forEach(it => db.collection('kb').doc(it.id).set(it).catch(() => {}));
+      else { items = snap.docs.map(d => ({ id: d.id, ...d.data() })); local(); render(); }
+      firstSnap = false;
+    }, () => {});
+  } catch (e) { db = null; }
+  try {
+    const dl = await claude.use('downloads');
+    if (dl) { const b = $('#exp'); b.hidden = false; b.onclick = () => dl.save({ filename: 'support-playbook-backup.json', data: JSON.stringify(items, null, 2) }).catch(() => toast('Save was cancelled')); }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
